@@ -14,8 +14,8 @@ export class CategoryItemComponent {
     readonly router: Router
   ) { }
 
-  selectCategory(category: Category) {
-    this.router.navigate(['/quiz', category.id]);
+  selectCategory() {
+    this.router.navigate(['/quiz', this.category.id]);
   }
 
 }

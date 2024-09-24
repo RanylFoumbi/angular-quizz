@@ -21,6 +21,7 @@ export class QuizComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
+      this.quizService.getQuizContent()
       this.quizService.quizContent = this.quizService.quizContent.filter(
         (question) => question.category.id == params['categoryId']
       )
