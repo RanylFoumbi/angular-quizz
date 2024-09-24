@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
+import { Category } from "./category.service"
 
 @Injectable({
   providedIn: 'root'
@@ -42,11 +43,14 @@ export class QuizService {
     this.http.get('http://localhost:3000/questions').subscribe((questions: any) => {
       for (const question of questions) {
         this.http.get(`http://localhost:3000/answers?questionId=${question.id}`).subscribe((answers: any) => {
-          this.quizContent.push({
+          this.http.get<Category[]>(`http://localhost:3000/categories?id=${question.category}`).subscribe((data) =>{
+            this.quizContent.push({
               id: question.id,
               question: question.questionLabel,
-              answers
-          });
+              answers,
+              category: data[0]
+           });
+          })
         });
       }
     });

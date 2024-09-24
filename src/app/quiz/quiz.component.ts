@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../auth/auth.service';
 import { ActivatedRoute, Router } from "@angular/router";
 import { QuizService } from "../shared/services/quiz.service";
 
@@ -13,15 +14,26 @@ export class QuizComponent implements OnInit {
 
   constructor(
     private quizService: QuizService,
+    private authService: AuthService,
     private router: Router,
     private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.quizService.playerName = params['playerName'];
-      this.playerName = params['playerName'];
+      this.quizService.quizContent = this.quizService.quizContent.filter(
+        (question) => question.category.id == params['categoryId']
+      )
     });
+    this.getUser()
+  }
+
+  getUser(): void {
+    this.authService.getSavedUserInfo().subscribe((data) => {
+      const user = (data as any[])[0]
+      this.playerName = user.username
+      this.quizService.playerName = user.username
+    })
   }
 
   goToResultPage() {
