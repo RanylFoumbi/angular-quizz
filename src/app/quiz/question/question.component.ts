@@ -6,12 +6,8 @@ import { QuizService } from "../../shared/services/quiz.service";
   templateUrl: './question.component.html',
   styleUrls: ['./question.component.scss']
 })
-export class QuestionComponent implements OnInit {
+export class QuestionComponent {
   quizContent: any[] = this.quizService.quizContent;
 
   constructor(private quizService: QuizService) { }
-
-  ngOnInit(): void {
-    this.quizService.getQuizContent();
-  }
 }
